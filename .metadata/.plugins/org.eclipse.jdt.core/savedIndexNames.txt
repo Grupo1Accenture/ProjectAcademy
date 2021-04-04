@@ -1,0 +1,2 @@
+INDEX VERSION 1.131+C:\Users\diogo\OneDrive\Documentos\MeusProjetos\backupAcademy\.metadata\.plugins\org.eclipse.jdt.core
+2321139775.index

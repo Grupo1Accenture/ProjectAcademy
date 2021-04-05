@@ -11,6 +11,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.accenture.academico.model.entities.ContaCorrente;
+import com.accenture.academico.model.entities.Extrato;
 import com.accenture.academico.model.repositories.ContaCorrenteRepository;
 import com.accenture.academico.model.servicies.exceptions.DatabaseException;
 import com.accenture.academico.model.servicies.exceptions.ResourceNotFoundException;
@@ -60,7 +61,9 @@ public class ContaCorrenteService {
 		return repository.save(entity);
 	}
 	private void saqueData(ContaCorrente entity, Double saque) {
-		entity.setSaque(saque);
+		if(entity.getSaldo() >= saque) {
+			entity.setSaque(saque);
+		}
 	}
 	public ContaCorrente deposito(Long id, Double deposito) {
 		ContaCorrente entity = repository.getOne(id);
@@ -74,12 +77,35 @@ public class ContaCorrenteService {
 	public ContaCorrente transferencia(Long id, Long idDestino, Double valorDestino) {
 		ContaCorrente entity1 = repository.getOne(id);
 		ContaCorrente entity2 = repository.getOne(idDestino);
-		transferenciaData(entity1, valorDestino, entity2);
+		transferenciaData(entity1, valorDestino, entity2, idDestino);
 		return repository.save(entity1);
 	}
-	private void transferenciaData(ContaCorrente entity1, Double trans, ContaCorrente entity2) {
-		entity1.setSaque(trans);
-		entity2.setDeposito(trans);
+	private void transferenciaData(ContaCorrente entity1, Double trans, ContaCorrente entity2, Long id) {
+		try {
+			if(entity2.getContaCorrenteNumero() != null) {
+				entity1.setSaque(trans);
+				entity2.setDeposito(trans);
+			} 
+		}catch(EntityNotFoundException e) {
+				throw new ResourceNotFoundException(id);
+			
+		}
 		
+		
+	}
+	public ContaCorrente recalcularSaldo(Long id) {
+		ContaCorrente entity = repository.getOne(id);
+		recalcularSaldoData(entity);
+		return repository.save(entity);
+	}
+	public void recalcularSaldoData(ContaCorrente entity) {
+		List<Extrato> extrato = entity.getExtrato();
+		for(Extrato item : extrato) {
+			if(item.getOperationStatus().getCode() == 1 ) {
+				entity.setSaldo(entity.getSaldo() - item.getValorOperacao());	
+			}else if(item.getOperationStatus().getCode() == 2 || item.getOperationStatus().getCode() == 3) {
+				entity.setSaldo(entity.getSaldo() + item.getValorOperacao());	
+			}
+		}
 	}
 }

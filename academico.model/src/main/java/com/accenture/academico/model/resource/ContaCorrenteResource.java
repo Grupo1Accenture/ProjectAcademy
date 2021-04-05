@@ -66,4 +66,9 @@ public class ContaCorrenteResource {
 		ContaCorrente obj = service.transferencia(id, idDestino, valorDestino);
 		return ResponseEntity.ok().body(obj);
 	}
+	@GetMapping(value = "/recalcularsaldo/{id}")
+	public ResponseEntity<ContaCorrente> recalcularSaldo(@PathVariable Long id){
+		ContaCorrente obj = service.recalcularSaldo(id);
+		return ResponseEntity.ok().body(obj);
+	}
 }

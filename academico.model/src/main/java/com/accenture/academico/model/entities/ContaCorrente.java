@@ -32,10 +32,12 @@ public class ContaCorrente implements Serializable {
 	@JoinColumn(name = "client_id")
 	private Cliente client;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "agencia_id")
 	private Agencia agencia;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "conta")
 	private List<Extrato> extrato = new ArrayList<>();
 	

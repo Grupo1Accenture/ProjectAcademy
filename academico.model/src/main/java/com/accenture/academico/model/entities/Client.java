@@ -11,9 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "tb_cliente")
-public class Cliente implements Serializable {
+public class Client implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -28,15 +30,15 @@ public class Cliente implements Serializable {
 	/*@JsonIgnore
 	@OneToMany(mappedBy = "client")
 	private List<Agencia> agencia = new ArrayList<>();*/
-	
+	@JsonIgnore
 	@OneToMany(mappedBy = "client")
-	private List<ContaCorrente> conta = new ArrayList<>();
+	private List<CurrentAccount> account = new ArrayList<>();
 	
-	public Cliente() {
+	public Client() {
 		
 	}
 
-	public Cliente(Long id, String name, String cpf, String phone) {
+	public Client(Long id, String name, String cpf, String phone) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -86,17 +88,17 @@ public class Cliente implements Serializable {
 		this.agencia = agencia;
 	}*/
 
-	public List<ContaCorrente> getConta() {
-		return conta;
+	public List<CurrentAccount> getAccount() {
+		return account;
 	}
 
-	public void setConta(List<ContaCorrente> conta) {
-		this.conta = conta;
+	public void setAccount(List<CurrentAccount> account) {
+		this.account = account;
 	}
 
 	@Override
 	public String toString() {
-		return "Cliente [conta=" + conta + "]";
+		return "Client [account=" + account + "]";
 	}
 
 	@Override
@@ -115,7 +117,7 @@ public class Cliente implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cliente other = (Cliente) obj;
+		Client other = (Client) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

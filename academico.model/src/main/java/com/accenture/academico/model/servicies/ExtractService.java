@@ -6,29 +6,29 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.accenture.academico.model.entities.ContaCorrente;
-import com.accenture.academico.model.entities.Extrato;
-import com.accenture.academico.model.repositories.ContaCorrenteRepository;
-import com.accenture.academico.model.repositories.ExtratoRepository;
+import com.accenture.academico.model.entities.CurrentAccount;
+import com.accenture.academico.model.entities.Extract;
+import com.accenture.academico.model.repositories.CurrentAccountRepository;
+import com.accenture.academico.model.repositories.ExtractRepository;
 import com.accenture.academico.model.servicies.exceptions.ResourceNotFoundException;
 
 @Service
-public class ExtratoService {
+public class ExtractService {
 
 	@Autowired
-	private ExtratoRepository repository; 
+	private ExtractRepository repository; 
 	@Autowired
-	private ContaCorrenteRepository repositorycc;
+	private CurrentAccountRepository repositorycc;
 	
-	public List<Extrato>findAll(){
+	public List<Extract>findAll(){
 		return repository.findAll();
 	}
-	public Extrato findById(Long id) {
-		Optional<Extrato> obj = repository.findById(id);
+	public Extract findById(Long id) {
+		Optional<Extract> obj = repository.findById(id);
 		return obj.orElseThrow(()-> new ResourceNotFoundException(id));
 	}
-	public ContaCorrente extratoById(Long id) {
-		Optional<ContaCorrente> obj = repositorycc.findById(id);
+	public CurrentAccount extractById(Long id) {
+		Optional<CurrentAccount> obj = repositorycc.findById(id);
 		return obj.orElseThrow(()-> new ResourceNotFoundException(id));
 	}
 	/*public Extrato findById(Long id) {

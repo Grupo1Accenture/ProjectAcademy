@@ -10,29 +10,25 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.accenture.academico.model.entities.Cliente;
-import com.accenture.academico.model.repositories.ClienteRepository;
+import com.accenture.academico.model.entities.Agency;
+import com.accenture.academico.model.repositories.AgencyRepository;
 import com.accenture.academico.model.servicies.exceptions.DatabaseException;
 import com.accenture.academico.model.servicies.exceptions.ResourceNotFoundException;
 
 @Service
-public class ClienteService {
+public class AgencyService {
 
 	@Autowired
-	private ClienteRepository repository; 
+	private AgencyRepository repository; 
 	
-	public List<Cliente>findAll(){
+	public List<Agency>findAll(){
 		return repository.findAll();
 	}
-	public Cliente findById(Long id) {
-		Optional<Cliente> obj = repository.findById(id);
+	public Agency findById(Long id) {
+		Optional<Agency> obj = repository.findById(id);
 		return obj.orElseThrow(()-> new ResourceNotFoundException(id));
 	}
-	public Cliente contaById(Long id) {
-		Optional<Cliente> obj = repository.findById(id);
-		return obj.orElseThrow(()-> new ResourceNotFoundException(id));
-	}
-	public Cliente insert(Cliente obj) {
+	public Agency insert(Agency obj) {
 		return repository.save(obj);
 	}
 	public void delete(Long id) {
@@ -44,19 +40,20 @@ public class ClienteService {
 			throw new DatabaseException(e.getMessage());
 		}
 	}
-	public Cliente update(Long id,Cliente obj ) {
+	public Agency update(Long id,Agency obj ) {
 		try {
-			Cliente entity = repository.getOne(id);
+			Agency entity = repository.getOne(id);
 			updateData(entity, obj);
 			return repository.save(entity);
 		} catch(EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);
 		}
 	}
-	private void updateData(Cliente entity, Cliente obj) {
+	private void updateData(Agency entity, Agency obj) {
 		entity.setName(obj.getName());
-		entity.setCpf(obj.getCpf());
+		entity.setAddress(obj.getAddress());
 		entity.setPhone(obj.getPhone());
+		//entity.setClient(obj.getClient());
 		
 	}
 }

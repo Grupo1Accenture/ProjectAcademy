@@ -15,33 +15,33 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name= "tb_agencia")
-public class Agencia implements Serializable {
+public class Agency implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String nome;
-	private String endereco;
-	private String telefone;
+	private String name;
+	private String address;
+	private String phone;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "agencia")
-	private List<ContaCorrente> conta = new ArrayList<>();
+	@OneToMany(mappedBy = "agency")
+	private List<CurrentAccount> account = new ArrayList<>();
 	/*@ManyToOne
 	@JoinColumn(name = "client_id")
 	private Cliente client;*/
 	
-	public Agencia() {
+	public Agency() {
 	}
 
-	public Agencia(Long id, String nome, String endereco, String telefone) {
+	public Agency(Long id, String name, String address, String phone) {
 		super();
 		this.id = id;
-		this.nome = nome;
-		this.endereco = endereco;
-		this.telefone = telefone;
+		this.name = name;
+		this.address = address;
+		this.phone = phone;
 		//this.client = client;
 	}
 
@@ -53,28 +53,28 @@ public class Agencia implements Serializable {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getEndereco() {
-		return endereco;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
-	public String getTelefone() {
-		return telefone;
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	
 
@@ -97,12 +97,12 @@ public class Agencia implements Serializable {
 
 
 
-	public List<ContaCorrente> getConta() {
-		return conta;
+	public List<CurrentAccount> getAccount() {
+		return account;
 	}
 
-	public void setConta(List<ContaCorrente> conta) {
-		this.conta = conta;
+	public void setAccount(List<CurrentAccount> account) {
+		this.account = account;
 	}
 
 	@Override
@@ -113,7 +113,7 @@ public class Agencia implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Agencia other = (Agencia) obj;
+		Agency other = (Agency) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

@@ -8,30 +8,30 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.accenture.academico.model.entities.ContaCorrente;
-import com.accenture.academico.model.entities.Extrato;
-import com.accenture.academico.model.servicies.ExtratoService;
+import com.accenture.academico.model.entities.CurrentAccount;
+import com.accenture.academico.model.entities.Extract;
+import com.accenture.academico.model.servicies.ExtractService;
 
 @RestController
 @RequestMapping(value= "/extratos")
-public class ExtratoResource {
+public class ExtractResource {
 	@Autowired
-	private ExtratoService service;
+	private ExtractService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Extrato>> findAll(){
-		List<Extrato> list = service.findAll();
+	public ResponseEntity<List<Extract>> findAll(){
+		List<Extract> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Extrato> findById(@PathVariable Long id){
-		Extrato obj = service.findById(id);
+	public ResponseEntity<Extract> findById(@PathVariable Long id){
+		Extract obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	@GetMapping(value = "/consulta/{id}")
-	public ResponseEntity<List<Extrato>> extratoById(@PathVariable Long id){
-		ContaCorrente obj = service.extratoById(id);
-		return ResponseEntity.ok().body(obj.getExtrato());
+	public ResponseEntity<List<Extract>> extractById(@PathVariable Long id){
+		CurrentAccount obj = service.extractById(id);
+		return ResponseEntity.ok().body(obj.getExtract());
 	}
 	/*@PostMapping
 	public ResponseEntity<Extrato> insert (@RequestBody Extrato obj){

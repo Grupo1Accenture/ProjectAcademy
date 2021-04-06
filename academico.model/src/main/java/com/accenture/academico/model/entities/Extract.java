@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_extrato")
-public class Extrato implements Serializable {
+public class Extract implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -25,24 +25,24 @@ public class Extrato implements Serializable {
 	private Long id;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING ,pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT-3")
-	private Instant dataHoraMovimento;
+	private Instant dateTimeMovement;
 	private Integer operationStatus;
-	private Double valorOperacao;
+	private Double operationValue;
 	
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "conta_id")
-	private ContaCorrente conta;
-	public Extrato() {
+	@JoinColumn(name = "account_id")
+	private CurrentAccount account;
+	public Extract() {
 	}
 
-	public Extrato(Long id, OperationStatus operationStatus, Double valorOperacao, ContaCorrente conta) {
+	public Extract(Long id, OperationStatus operationStatus, Double operationValue, CurrentAccount account) {
 		super();
 		this.id = id;
-		setDataHoraMovimento(getDataHoraMovimento());
-		//setOperationStatus(operationStatus);
-		this.valorOperacao = valorOperacao;
-		this.conta = conta;
+		setDateTimeMovement(getDateTimeMovement());
+		setOperationStatus(operationStatus);
+		this.operationValue = operationValue;
+		this.account = account;
 	}
 
 	public Long getId() {
@@ -53,7 +53,7 @@ public class Extrato implements Serializable {
 		this.id = id;
 	}
 
-	public Instant getDataHoraMovimento() {
+	public Instant getDateTimeMovement() {
 		return Instant.now();
 	}
 
@@ -65,24 +65,24 @@ public class Extrato implements Serializable {
 			this.operationStatus = operationStatus.getCode();
 		}
 	}
-	public void setDataHoraMovimento(Instant dataHoraMovimento) {
-		this.dataHoraMovimento = dataHoraMovimento;
+	public void setDateTimeMovement(Instant dateTimeMovement) {
+		this.dateTimeMovement = dateTimeMovement;
 	}
 	
-	public Double getValorOperacao() {
-		return valorOperacao;
+	public Double getOperationValue() {
+		return operationValue;
 	}
 
-	public void setValorOperacao(Double valorOperacao) {
-		this.valorOperacao = valorOperacao;
+	public void setOperationValue(Double operationValue) {
+		this.operationValue = operationValue;
 	}
 
-	public ContaCorrente getConta() {
-		return conta;
+	public CurrentAccount getAccount() {
+		return account;
 	}
 
-	public void setConta(ContaCorrente conta) {
-		this.conta = conta;
+	public void setAccount(CurrentAccount account) {
+		this.account = account;
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class Extrato implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Extrato other = (Extrato) obj;
+		Extract other = (Extract) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -112,8 +112,8 @@ public class Extrato implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Extrato [id=" + id + ", dataHoraMovimento=" + dataHoraMovimento + ", operationStatus=" + operationStatus
-				+ ", valorOperacao=" + valorOperacao + ", conta=" + conta + "]";
+		return "Extract [id=" + id + ", dateTimeMovement=" + dateTimeMovement + ", operationStatus=" + operationStatus
+				+ ", operationValue=" + operationValue + ", account=" + account + "]";
 	}
 	
 

@@ -14,39 +14,46 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.accenture.academico.model.entities.Agencia;
-import com.accenture.academico.model.servicies.AgenciaService;
+import com.accenture.academico.model.entities.Client;
+import com.accenture.academico.model.entities.CurrentAccount;
+import com.accenture.academico.model.servicies.ClientService;
 
 @RestController
-@RequestMapping(value= "/agencias")
-public class AgenciaResource {
+@RequestMapping(value= "/clienties")
+public class ClientResource {
 	@Autowired
-	private AgenciaService service;
+	private ClientService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Agencia>> findAll(){
-		List<Agencia> list = service.findAll();
+	public ResponseEntity<List<Client>> findAll(){
+		List<Client> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Agencia> findById(@PathVariable Long id){
-		Agencia obj = service.findById(id);
+	public ResponseEntity<Client> findById(@PathVariable Long id){
+		Client obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
+	@GetMapping(value = "dadosconta/{id}")
+	public ResponseEntity<List<CurrentAccount>> accountById(@PathVariable Long id){
+		Client obj  = service.accountById(id);
+		return ResponseEntity.ok().body(obj.getAccount());
+	}
+	
 	@PostMapping
-	public ResponseEntity<Agencia> insert (@RequestBody Agencia obj){
+	public ResponseEntity<Client> insert (@RequestBody Client obj){
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
 	}
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> delele(@PathVariable Long id){
+	public ResponseEntity<Void> delete(@PathVariable Long id){
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Agencia> update(@PathVariable Long id, @RequestBody Agencia obj){
+	public ResponseEntity<Client> update(@PathVariable Long id, @RequestBody Client obj){
 		obj = service.update(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}

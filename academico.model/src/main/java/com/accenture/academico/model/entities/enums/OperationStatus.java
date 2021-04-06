@@ -1,9 +1,11 @@
 package com.accenture.academico.model.entities.enums;
 
 public enum OperationStatus {
-	SAQUE(1),
-	DEPOSITO(2),
-	TRANSFERENCIA(3);
+	WITHDRAW(1),
+	INITIAL_DEPOSIT(2),
+	DEPOSIT(3),
+	ORIGIN_TRANSFER(4),
+	DESTINATION_TRANSFER(5);
 	private int code;
 	
 	private OperationStatus(int code) {
@@ -19,6 +21,6 @@ public enum OperationStatus {
 				return value;
 			}
 		}
-		throw new IllegalArgumentException("Codigo invalido");
+		throw new IllegalArgumentException("Invalid code");
 	}
 }

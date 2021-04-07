@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,17 +25,18 @@ public class CurrentAccount implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@Column(unique=true, nullable=false, length=7)
 	private String currentAccountNumber;
+	
+	@Column(nullable=false)
 	private Double balance;
 	
-	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "client_id")
+	@JoinColumn(name = "client_id", nullable = false)
 	private Client client;
 	
-	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "agency_id")
+	@JoinColumn(name = "agency_id", nullable = false)
 	private Agency agency;
 	
 	@JsonIgnore

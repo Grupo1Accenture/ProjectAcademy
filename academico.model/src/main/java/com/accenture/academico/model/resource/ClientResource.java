@@ -19,7 +19,7 @@ import com.accenture.academico.model.entities.CurrentAccount;
 import com.accenture.academico.model.servicies.ClientService;
 
 @RestController
-@RequestMapping(value= "/clienties")
+@RequestMapping(value= "/clients")
 public class ClientResource {
 	@Autowired
 	private ClientService service;

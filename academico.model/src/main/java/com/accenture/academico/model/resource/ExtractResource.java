@@ -13,7 +13,7 @@ import com.accenture.academico.model.entities.Extract;
 import com.accenture.academico.model.servicies.ExtractService;
 
 @RestController
-@RequestMapping(value= "/extratos")
+@RequestMapping(value= "/extracts")
 public class ExtractResource {
 	@Autowired
 	private ExtractService service;
@@ -28,7 +28,7 @@ public class ExtractResource {
 		Extract obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
-	@GetMapping(value = "/consulta/{id}")
+	@GetMapping(value = "/consult/{id}")
 	public ResponseEntity<List<Extract>> extractById(@PathVariable Long id){
 		CurrentAccount obj = service.extractById(id);
 		return ResponseEntity.ok().body(obj.getExtract());

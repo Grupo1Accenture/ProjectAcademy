@@ -3,6 +3,7 @@ package com.accenture.academico.model.entities;
 import java.io.Serializable;
 import java.time.Instant;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,13 +26,18 @@ public class Extract implements Serializable {
 	private Long id;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING ,pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT-3")
+	@Column(nullable=false)
 	private Instant dateTimeMovement;
+	
+	@Column(nullable=false)
 	private Integer operationStatus;
+	
+	@Column(nullable=false)
 	private Double operationValue;
 	
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "account_id")
+	@JoinColumn(name = "account_id", nullable=false)
 	private CurrentAccount account;
 	public Extract() {
 	}

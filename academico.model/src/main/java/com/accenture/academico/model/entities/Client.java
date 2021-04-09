@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,7 +20,7 @@ import com.sun.istack.NotNull;
 import br.com.caelum.stella.validation.CPFValidator;
 
 @Entity
-@Table(name = "tb_cliente")
+@Table(name = "client")
 public class Client implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -31,16 +33,12 @@ public class Client implements Serializable {
 	
 	
 	@NotNull
-	@Column(unique=true, length=14)
+	@Column(unique=true, length=11)
 	private String cpf;
 	
 	@NotNull
 	private String phone;
 	
-	
-	/*@JsonIgnore
-	@OneToMany(mappedBy = "client")
-	private List<Agencia> agencia = new ArrayList<>();*/
 	@JsonIgnore
 	@OneToMany(mappedBy = "client")
 	private List<CurrentAccount> account = new ArrayList<>();
@@ -53,7 +51,7 @@ public class Client implements Serializable {
 		super();
 		this.id = id;
 		this.name = name;
-		this.cpf = cpf;
+		setCpf(cpf);
 		this.phone = phone;
 	}
 

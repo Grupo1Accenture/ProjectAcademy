@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,7 +19,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "tb_conta_corrente")
+@Table(name = "current_account")
 public class CurrentAccount implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -25,18 +27,18 @@ public class CurrentAccount implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(unique=true, nullable=false, length=7)
+	@Column(name="number", unique=true, nullable=false, length=7)
 	private String currentAccountNumber;
 	
 	@Column(nullable=false)
 	private Double balance;
 	
 	@ManyToOne
-	@JoinColumn(name = "client_id", nullable = false)
+	@JoinColumn(name = "fk_idClient", nullable = false)
 	private Client client;
 	
 	@ManyToOne
-	@JoinColumn(name = "agency_id", nullable = false)
+	@JoinColumn(name = "fk_idAgency", nullable = false)
 	private Agency agency;
 	
 	@JsonIgnore

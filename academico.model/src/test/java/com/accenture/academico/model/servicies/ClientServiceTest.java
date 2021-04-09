@@ -28,7 +28,7 @@ class ClientServiceTest {
 	@Test
 	void testFindAll() {
 		List<Client> client = clientService.findAll();
-		assertEquals(2, client.size());
+		assertEquals(3, client.size());
 	}
 	
 	@Test
@@ -40,7 +40,7 @@ class ClientServiceTest {
 	
 	@Test
 	void insert() {
-		Client client = new Client(null, "Claudemir", "12345678911","81987564235");
+		Client client = new Client(null, "Ana", "44881571060","81987564235");
 		Mockito.when(clientRepository.save(client)).thenReturn(client);
 		assertThat(clientService.insert(client)).isEqualTo(client);
 	}

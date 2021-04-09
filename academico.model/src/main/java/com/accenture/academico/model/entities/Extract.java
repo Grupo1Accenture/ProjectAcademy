@@ -5,6 +5,7 @@ import java.time.Instant;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,27 +18,28 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "tb_extrato")
+@Table(name = "extract")
 public class Extract implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="idExtract")
 	private Long id;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING ,pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT-3")
-	@Column(nullable=false)
+	@Column(name = "moveDate",nullable=false)
 	private Instant dateTimeMovement;
 	
-	@Column(nullable=false)
+	@Column(name="operation",nullable=false)
 	private Integer operationStatus;
 	
-	@Column(nullable=false)
+	@Column(name="value",nullable=false)
 	private Double operationValue;
 	
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "account_id", nullable=false)
+	@JoinColumn(name = "fk_idCurrentAccount", nullable=false)
 	private CurrentAccount account;
 	public Extract() {
 	}

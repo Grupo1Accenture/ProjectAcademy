@@ -13,6 +13,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
+
+import br.com.caelum.stella.validation.CPFValidator;
 
 @Entity
 @Table(name = "tb_cliente")
@@ -23,13 +26,15 @@ public class Client implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(nullable=false)
+	@NotNull
 	private String name;
 	
-	@Column(unique=true, nullable=false, length=11)
+	
+	@NotNull
+	@Column(unique=true, length=14)
 	private String cpf;
 	
-	@Column(nullable=false)
+	@NotNull
 	private String phone;
 	
 	
@@ -73,7 +78,11 @@ public class Client implements Serializable {
 	}
 
 	public void setCpf(String cpf) {
-		this.cpf = cpf;
+		boolean valido = valida(cpf);
+		if(valido == true) {
+			this.cpf = cpf;
+		}
+		//this.cpf = cpf;
 	}
 
 	public String getPhone() {
@@ -83,16 +92,6 @@ public class Client implements Serializable {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	
-	
-
-	/*public List<Agencia> getAgencia() {
-		return agencia;
-	}
-
-	public void setAgencia(List<Agencia> agencia) {
-		this.agencia = agencia;
-	}*/
 
 	public List<CurrentAccount> getAccount() {
 		return account;
@@ -101,6 +100,15 @@ public class Client implements Serializable {
 	public void setAccount(List<CurrentAccount> account) {
 		this.account = account;
 	}
+	public static boolean valida(String cpf) { 
+	    CPFValidator cpfValidator = new CPFValidator(); 
+	    try{ cpfValidator.assertValid(cpf); 
+	    return true; 
+	    }catch(Exception e){ 
+	        e.printStackTrace(); 
+	        return false; 
+	        } 
+	    }
 
 	@Override
 	public String toString() {
